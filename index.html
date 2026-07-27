@@ -4,9 +4,9 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>PremLal Technologies — Engineering Tomorrow. Building the Future.</title>
-<meta name="description" content="PremLal Technologies is an Indian technology company building innovative digital products, AI-powered solutions, cloud applications, and next-generation platforms. Home of Floko." />
+<meta name="description" content="PremLal Technologies is an Indian technology company building innovative digital products, AI-powered solutions, cloud applications, and next-generation platforms. Home of Floko and PYCORE IDE." />
 <meta property="og:title" content="PremLal Technologies" />
-<meta property="og:description" content="Engineering Tomorrow. Building the Future. Indian technology company behind Floko." />
+<meta property="og:description" content="Engineering Tomorrow. Building the Future. Indian technology company behind Floko and PYCORE IDE." />
 <meta property="og:type" content="website" />
 <meta name="theme-color" content="#05060F" />
 <link rel="icon" type="image/svg+xml" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%236C63FF"/><stop offset="1" stop-color="%2306B6D4"/></linearGradient></defs><rect width="48" height="48" rx="12" fill="%2305060F"/><path d="M14 34 V14 h12 a8 8 0 0 1 0 16 h-8" fill="none" stroke="url(%23g)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>' />
@@ -221,6 +221,37 @@ h2{font-family:var(--disp);font-weight:700;letter-spacing:-.02em;font-size:clamp
 .scr-nav i.on{background:var(--iris);box-shadow:0 0 12px rgba(108,99,255,.8)}
 @media(max-width:900px){.floko-wrap{grid-template-columns:1fr}.phone{transform:rotate(0)}@keyframes phonefloat{50%{transform:translateY(-14px)}}}
 
+/* PYCORE IDE showcase — reuses Floko showcase pattern (badge/name/desc/feats) with a cool accent */
+.floko-badge.cyan{color:var(--cyan);background:rgba(6,182,212,.08);border-color:rgba(6,182,212,.25)}
+.floko-name.cool{background:var(--grad);background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 7s linear infinite}
+.laptop{position:relative;width:min(460px,88vw);margin-inline:auto;animation:laptopfloat 8s ease-in-out infinite}
+@keyframes laptopfloat{50%{transform:translateY(-16px)}}
+.laptop-frame{background:linear-gradient(160deg,#12152e,#0A0C1B);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:12px 12px 8px;
+  box-shadow:0 40px 90px rgba(0,0,0,.6),0 0 80px rgba(6,182,212,.2)}
+.laptop-notch{width:64px;height:5px;border-radius:0 0 8px 8px;background:#05060F;margin:0 auto 8px}
+.laptop-screen{width:100%;aspect-ratio:16/10;border-radius:10px;background:#0B1020;overflow:hidden;position:relative;display:flex;flex-direction:column;border:1px solid rgba(255,255,255,.06)}
+.laptop-base{width:114%;margin-left:-7%;height:14px;background:linear-gradient(180deg,#12152e,#05060F);border-radius:0 0 10px 10px;position:relative}
+.laptop-base::after{content:'';position:absolute;left:50%;top:0;transform:translateX(-50%);width:64px;height:5px;background:rgba(0,0,0,.35);border-radius:0 0 6px 6px}
+.ide-topbar{display:flex;align-items:center;gap:7px;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0}
+.ide-dot{width:9px;height:9px;border-radius:50%}
+.ide-dot.r{background:#ff5f56}.ide-dot.y{background:#ffbd2e}.ide-dot.g{background:#27c93f}
+.ide-title{margin-left:6px;font-family:var(--mono);font-size:.68rem;color:var(--faint)}
+.ide-body{flex:1;display:grid;grid-template-columns:32px 1fr;min-height:0}
+.ide-lines{padding:14px 6px;font-family:var(--mono);font-size:.66rem;color:var(--faint);line-height:2.15;text-align:right;border-right:1px solid rgba(255,255,255,.05)}
+.ide-placeholder{display:grid;place-items:center;color:var(--faint);font-family:var(--mono);font-size:.82rem;letter-spacing:.04em;text-align:center;padding:20px}
+@media(max-width:900px){.laptop{animation:laptopfloatsm 8s ease-in-out infinite}}
+@keyframes laptopfloatsm{50%{transform:translateY(-10px)}}
+
+/* Our Products overview */
+.product-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:52px;text-align:left}
+.product-card{padding:38px 34px;border-radius:var(--r-lg);position:relative;overflow:hidden;transition:transform .35s,border-color .35s;display:block}
+.product-card:hover{transform:translateY(-8px);border-color:rgba(108,99,255,.45)}
+.product-card h3{font-family:var(--disp);font-size:1.7rem;margin:16px 0 12px}
+.product-card p{color:var(--dim);font-size:.98rem;margin-bottom:22px}
+.product-link{font-family:var(--disp);font-weight:600;font-size:.92rem;color:var(--text);display:inline-flex;align-items:center;gap:6px;transition:gap .25s}
+.product-card:hover .product-link{gap:10px}
+@media(max-width:820px){.product-grid{grid-template-columns:1fr}}
+
 /* Why / Values chips */
 .chip-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:16px;margin-top:48px}
 .chip{padding:26px 20px;text-align:center;border-radius:var(--r);transition:transform .3s,border-color .3s,background .3s}
@@ -329,6 +360,7 @@ footer{border-top:1px solid var(--glass-brd);padding:70px 0 40px;margin-top:40px
     <a href="#about" data-hover>About</a>
     <a href="#services" data-hover>Services</a>
     <a href="#floko" data-hover>Floko</a>
+    <a href="#pycore" data-hover>PYCORE IDE</a>
     <a href="#roadmap" data-hover>Roadmap</a>
     <a href="#founder" data-hover>Founder</a>
     <a href="#contact" data-hover>Contact</a>
@@ -382,6 +414,32 @@ footer{border-top:1px solid var(--glass-brd);padding:70px 0 40px;margin-top:40px
   </div>
 </section>
 
+<section id="products">
+  <div class="container center">
+    <div class="sec-eyebrow rv">Our products</div>
+    <h2 class="rv">Two products. One mission.</h2>
+    <p class="sec-sub rv" style="margin-inline:auto">From social storytelling to a Python IDE built for students — here's what we're shipping.</p>
+    <div class="product-grid">
+      <a class="product-card glass rv" href="#floko" data-hover>
+        <div class="floko-badge">✦ Flagship product</div>
+        <h3>Floko</h3>
+        <p>A modern social storytelling platform where people discover, write, share, and experience stories in a beautiful, community-driven environment.</p>
+        <span class="product-link">Explore Floko
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
+      <a class="product-card glass rv" href="#pycore" data-hover>
+        <div class="floko-badge cyan">⚡ New product</div>
+        <h3>PYCORE IDE</h3>
+        <p>A standalone Python IDE with a bundled interpreter, built-in pip, and PYCORE AI error analysis — built for students and beginners.</p>
+        <span class="product-link">Explore PYCORE IDE
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
 <section id="services">
   <div class="container center">
     <div class="sec-eyebrow rv">What we do</div>
@@ -418,6 +476,47 @@ footer{border-top:1px solid var(--glass-brd);padding:70px 0 40px;margin-top:40px
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<section id="pycore" style="overflow:hidden">
+  <div class="container">
+    <div class="floko-wrap">
+      <div>
+        <div class="floko-badge cyan rv">⚡ New product</div>
+        <div class="floko-name cool rv">PYCORE IDE</div>
+        <p class="floko-desc rv">A standalone Python IDE with a bundled interpreter and built-in pip — no separate Python install required. Write, run, and debug Python instantly, with PYCORE AI reading your errors and explaining exactly what went wrong.</p>
+        <div class="floko-feats" id="pycore-feats"></div>
+        <div class="hero-ctas rv" style="justify-content:flex-start">
+          <a class="btn btn-primary" href="https://aryansingh783.github.io/pycore/" target="_blank" rel="noopener" data-hover>Download Now
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13m0 0l-4.5-4.5M12 16l4.5-4.5M4 21h16"/></svg>
+          </a>
+          <a class="btn btn-ghost" href="https://aryansingh783.github.io/pycore/" target="_blank" rel="noopener" data-hover>Learn More</a>
+        </div>
+      </div>
+      <div class="rv">
+        <div class="laptop">
+          <div class="laptop-frame">
+            <div class="laptop-notch"></div>
+            <div class="laptop-screen">
+              <div class="ide-topbar"><span class="ide-dot r"></span><span class="ide-dot y"></span><span class="ide-dot g"></span><span class="ide-title">pycore_ide.py</span></div>
+              <div class="ide-body">
+                <div class="ide-lines">1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8</div>
+                <div class="ide-placeholder">PYCORE IDE Screenshot</div>
+              </div>
+            </div>
+          </div>
+          <div class="laptop-base"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="center" style="margin-top:100px">
+      <div class="sec-eyebrow rv">Why students choose it</div>
+      <h2 class="rv">Everything a beginner needs, in one app</h2>
+      <p class="sec-sub rv" style="margin-inline:auto">No installs. No setup headaches. Just Python — plus an AI that explains your errors.</p>
+    </div>
+    <div class="cards" id="pycore-cards"></div>
   </div>
 </section>
 
@@ -526,6 +625,7 @@ footer{border-top:1px solid var(--glass-brd);padding:70px 0 40px;margin-top:40px
       <div class="foot-col">
         <h4>Products</h4>
         <a href="https://floko.web.app" target="_blank" rel="noopener" data-hover>Floko</a>
+        <a href="https://aryansingh783.github.io/pycore/" target="_blank" rel="noopener" data-hover>PYCORE IDE</a>
         <a href="#roadmap" data-hover>Future AI</a>
         <a href="#roadmap" data-hover>Developer tools</a>
         <a href="#roadmap" data-hover>Cloud</a>
@@ -569,6 +669,19 @@ const SERVICES=[
  ['Cyber Security','Hardened systems, secure auth, and safe user data.','M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10zM9 12l2 2 4-4'],
 ];
 const FEATS=['Beautiful reader','Fast performance','Creator friendly','Dark mode','Modern UI','Secure platform','AI recommendations','Community driven'];
+const PYCORE_FEATS=['No install needed','Built-in pip manager','PYCORE AI error analysis','Syntax highlighting','Auto indentation','Auto update checker','License protected','Student friendly'];
+const PYCORE_FEATURES=[
+ ['Built-in Python Interpreter','Bundled Python ships inside the app — run code instantly with zero setup.','M4 17l6-6-6-6M12 19h8'],
+ ['No Installation Required','Works standalone. No separate Python install and no PATH configuration, ever.','M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM4.9 4.9l14.2 14.2'],
+ ['Built-in pip Manager','Install packages at runtime with pip — fully independent of any system Python.','M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16zM3.27 6.96L12 12l8.73-5.04M12 22.08V12'],
+ ['PYCORE AI — Error Analysis','An in-editor AI tutor reads your traceback and explains what went wrong, step by step.','M12 2a4 4 0 0 1 4 4c0 1-.3 1.8-.9 2.5A4 4 0 0 1 18 12a4 4 0 0 1-2 3.5V17a4 4 0 0 1-8 0v-1.5A4 4 0 0 1 6 12a4 4 0 0 1 2.9-3.5A3.9 3.9 0 0 1 8 6a4 4 0 0 1 4-4z'],
+ ['Syntax Highlighting','A dedicated Python syntax highlighter keeps keywords, strings, and functions easy to read.','M7 8l-4 4 4 4M17 8l4 4-4 4M14 4l-4 16'],
+ ['Error Line Highlighting','The exact failing line is marked the moment your code throws an error.','M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0zM12 9v4M12 17h.01'],
+ ['Auto Indentation','Smart indentation keeps loops, functions, and blocks perfectly aligned as you type.','M3 6h18M7 12h14M3 18h18'],
+ ['Built-in Student Snippets','Ready-made Python examples for class 11/12 IP & CS, one click away.','M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z'],
+ ['Auto Update Checker','PYCORE IDE checks for new releases automatically and prompts you to update.','M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15'],
+ ['License Protected','A secure, per-device license system keeps the app safe and accounted for.','M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10zM9 12l2 2 4-4'],
+];
 const WHY=[['💡','Innovation'],['🛡️','Security'],['📈','Scalability'],['⚡','Performance'],['🎨','Modern design'],['🔮','Future ready']];
 const VALUES=[['🚀','Innovation'],['🤝','Integrity'],['💎','Quality'],['🔥','Passion'],['🫶','Trust'],['✨','Creativity']];
 const TECH=['Python','JavaScript','TypeScript','Node.js','HTML5','CSS3','React','Next.js','Supabase','Firebase','PostgreSQL','Docker','GitHub','Google Cloud','Vercel','Cloudflare'];
@@ -586,6 +699,19 @@ FEATS.forEach(f=>{
   const el=document.createElement('div');el.className='feat rv';
   el.innerHTML=`<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#06B6D4" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>${f}`;
   featWrap.appendChild(el);
+});
+const pycoreFeatWrap=document.getElementById('pycore-feats');
+PYCORE_FEATS.forEach(f=>{
+  const el=document.createElement('div');el.className='feat rv';
+  el.innerHTML=`<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#06B6D4" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>${f}`;
+  pycoreFeatWrap.appendChild(el);
+});
+const pycoreCardWrap=document.getElementById('pycore-cards');
+PYCORE_FEATURES.forEach(([t,d,p])=>{
+  const el=document.createElement('div');
+  el.className='card glass rv';
+  el.innerHTML=`<div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8B8CF9" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${p}"/></svg></div><h3>${t}</h3><p>${d}</p>`;
+  pycoreCardWrap.appendChild(el);
 });
 const mkChip=([i,t])=>{const el=document.createElement('div');el.className='chip glass rv';el.innerHTML=`<div class="ci">${i}</div><h3>${t}</h3>`;return el};
 WHY.forEach(c=>document.getElementById('why-chips').appendChild(mkChip(c)));
