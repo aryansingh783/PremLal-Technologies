@@ -25,9 +25,7 @@
   --disp:'Space Grotesk',sans-serif; --body:'Manrope',sans-serif; --mono:'JetBrains Mono',monospace;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-html.lenis{height:auto}
-.lenis.lenis-smooth{scroll-behavior:auto}
+html{scroll-behavior:smooth;scroll-padding-top:100px}
 body{
   background:var(--bg); color:var(--text); font-family:var(--body);
   font-size:16px; line-height:1.7; overflow-x:hidden;
@@ -317,6 +315,8 @@ h2{font-family:var(--disp);font-weight:700;letter-spacing:-.02em;font-size:clamp
 .inp:focus{border-color:var(--iris);box-shadow:0 0 0 4px rgba(108,99,255,.14)}
 textarea.inp{min-height:140px;resize:vertical}
 .form-ok{display:none;text-align:center;padding:20px;color:var(--cyan);font-weight:600}
+.form-err{display:none;text-align:center;padding:14px;margin-top:10px;color:#F87171;font-weight:600;font-size:.92rem;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.25);border-radius:12px}
+.btn-primary:disabled{opacity:.6;cursor:not-allowed;transform:none!important}
 @media(max-width:640px){.contact-wrap{padding:32px 22px}}
 
 /* Footer */
@@ -603,10 +603,12 @@ footer{border-top:1px solid var(--glass-brd);padding:70px 0 40px;margin-top:40px
         <div class="field"><label for="cname">Name</label><input class="inp" id="cname" type="text" placeholder="Your name" required /></div>
         <div class="field"><label for="cemail">Email</label><input class="inp" id="cemail" type="email" placeholder="you@example.com" required /></div>
         <div class="field"><label for="cmsg">Message</label><textarea class="inp" id="cmsg" placeholder="Tell us about your idea…" required></textarea></div>
-        <button class="btn btn-primary" type="submit" style="width:100%;justify-content:center" data-hover>Send message
+        <input type="text" id="choney" name="website" autocomplete="off" tabindex="-1" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" aria-hidden="true" />
+        <button class="btn btn-primary" type="submit" id="csubmit" style="width:100%;justify-content:center" data-hover>Send message
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
         </button>
-        <div class="form-ok" id="formok">✓ Message ready! Your email app is opening…</div>
+        <div class="form-ok" id="formok">✓ Message sent! We'll get back to you soon.</div>
+        <div class="form-err" id="formerr">Something went wrong. Please try again or email us directly.</div>
       </form>
     </div>
   </div>
@@ -653,7 +655,7 @@ footer{border-top:1px solid var(--glass-brd);padding:70px 0 40px;margin-top:40px
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 <script>
 /* ---------- Data ---------- */
 const SERVICES=[
@@ -765,16 +767,14 @@ const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
   requestAnimationFrame(tick);
 })();
 
-/* ---------- Smooth scroll (Lenis) ---------- */
-let lenis=null;
-if(window.Lenis&&!reduced){
-  lenis=new Lenis({duration:1.15,smoothWheel:true});
-  function raf(t){lenis.raf(t);requestAnimationFrame(raf)}
-  requestAnimationFrame(raf);
-  document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
-    const id=a.getAttribute('href');if(id.length>1&&document.querySelector(id)){e.preventDefault();lenis.scrollTo(id,{offset:-80})}
-  }));
-}
+/* ---------- Anchor scroll (native — no scroll hijacking/slowdown) ---------- */
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+  const id=a.getAttribute('href');
+  if(id.length>1&&document.querySelector(id)){
+    e.preventDefault();
+    document.querySelector(id).scrollIntoView({behavior:reduced?'auto':'smooth',block:'start'});
+  }
+}));
 
 /* ---------- Nav / scrollbar ---------- */
 const nav=document.getElementById('nav');
@@ -815,17 +815,49 @@ document.querySelectorAll('.card').forEach(c=>{
   });
 });
 
-/* ---------- Contact form (mailto) ---------- */
-document.getElementById('cform').addEventListener('submit',e=>{
+/* ---------- Supabase ---------- */
+const SUPABASE_URL='https://wyjcddqdusxfkdbfxkok.supabase.co/';       // e.g. https://xxxxxxxxxxxx.supabase.co
+const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind5amNkZHFkdXN4ZmtkYmZ4a29rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxNjk4NzUsImV4cCI6MjEwMDc0NTg3NX0.lVVMqCSQyWUaM4t-zR6256v_QUl7bgcmIrU3LOwnjRk';
+const sb=(window.supabase&&SUPABASE_URL!=='YOUR_SUPABASE_URL')
+  ?window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY)
+  :null;
+
+/* ---------- Contact form (Supabase) ---------- */
+document.getElementById('cform').addEventListener('submit',async e=>{
   e.preventDefault();
   const n=document.getElementById('cname').value.trim(),
         em=document.getElementById('cemail').value.trim(),
-        m=document.getElementById('cmsg').value.trim();
-  if(!n||!em||!m){alert('Please fill all fields');return}
-  const sub=encodeURIComponent('Hello from '+n+' — via premlal.tech');
-  const body=encodeURIComponent(m+'\n\n— '+n+' ('+em+')');
-  document.getElementById('formok').style.display='block';
-  location.href=`mailto:aryan.singh8764010@gmail.com?subject=${sub}&body=${body}`;
+        m=document.getElementById('cmsg').value.trim(),
+        honey=document.getElementById('choney').value.trim();
+  const okEl=document.getElementById('formok'),errEl=document.getElementById('formerr'),btn=document.getElementById('csubmit');
+  okEl.style.display='none';errEl.style.display='none';
+
+  if(honey){return} // bot caught by honeypot, silently drop
+  if(!n||!em||!m){errEl.textContent='Please fill all fields.';errEl.style.display='block';return}
+  const emailOk=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em);
+  if(!emailOk){errEl.textContent='Please enter a valid email address.';errEl.style.display='block';return}
+
+  if(!sb){
+    errEl.textContent='Form is not connected yet. Please email us directly at aryan.singh8764010@gmail.com';
+    errEl.style.display='block';
+    return;
+  }
+
+  const original=btn.innerHTML;
+  btn.disabled=true;btn.innerHTML='Sending…';
+
+  const{error}=await sb.from('contacts').insert([{name:n,email:em,message:m}]);
+
+  btn.disabled=false;btn.innerHTML=original;
+
+  if(error){
+    console.error('Supabase insert error:',error);
+    errEl.textContent='Something went wrong. Please try again or email us directly.';
+    errEl.style.display='block';
+    return;
+  }
+  okEl.style.display='block';
+  document.getElementById('cform').reset();
 });
 </script>
 </body>
